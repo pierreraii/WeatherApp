@@ -1,0 +1,33 @@
+<html>
+
+<head>
+        <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>Location</h1>
+    <input id="city" type="text" placeholder="City name" />
+    <input id="citySubmit" type="submit" value="Submit">
+    <h1>Interests</h1>
+    <!-- <input id="user" type="text" placeholder="User twitter name" />
+    <input id="userSubmit" type="submit" value="Submit"> -->
+    <script>
+        $("#citySubmit").click(function() {
+            getWeatherDemo($("#city").val())
+        });
+        function getWeatherDemo(cityName) {
+            $.get('https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast ' +
+                'where woeid in (select woeid from geo.places(1) where text="'+ cityName +'")&u=c&format=json', function (data) {
+                    alert("The temperatute in "+ cityName + " + is " +
+                        data.query.results.channel.item.condition.temp +
+                        data.query.results.channel.units.temperature
+                    );
+                });
+        }
+    </script>
+</body>
+
+</html>
